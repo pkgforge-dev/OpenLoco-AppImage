@@ -6,21 +6,36 @@ ARCH=$(uname -m)
 
 echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
-# pacman -Syu --noconfirm PACKAGESHERE
+pacman -Syu --noconfirm \
+    cmake    \
+    fmt      \
+    onetbb   \
+    openal   \
+    sdl3     \
+    yaml-cpp
 
 echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
-get-debloated-pkgs --add-common --prefer-nano
+get-debloated-pkgs --add-common --prefer-nano libdecor-mini
 
-# Comment this out if you need an AUR package
-#make-aur-package PACKAGENAME
+echo "Building OpenLoco..."
+echo "---------------------------------------------------------------"
+REPO="https://github.com/OpenLoco/OpenLoco"
+if [ "${DEVEL_RELEASE-}" = 1 ]; then
+    echo "Making nightly build of OpenLoco..."
+    echo "---------------------------------------------------------------"
+    VERSION="$(git ls-remote "$REPO" HEAD | cut -c 1-9 | head -1)"
+    git clone --depth 1 "$REPO" ./OpenLoco
+else
+    echo "Making stable build of OpenLoco..."
+    echo "---------------------------------------------------------------"
+    TAG=$(git ls-remote --tags --refs --sort='v:refname' "$REPO" "refs/tags/v*" | tail -n1 | cut -d/ -f3)
+    VERSION="${TAG#v}"
+    git clone --branch "$TAG" --single-branch --depth 1 "$REPO" ./OpenLoco
+fi
+echo "$VERSION" > ~/version
 
-# If the application needs to be manually built that has to be done down here
-
-# if you also have to make nightly releases check for DEVEL_RELEASE = 1
-#
-# if [ "${DEVEL_RELEASE-}" = 1 ]; then
-# 	nightly build steps
-# else
-# 	regular build steps
-# fi
+mkdir -p ./AppDir/bin
+cmake -S ./OpenLoco -G "Unix Makefiles" -B build -DCMAKE_BUILD_TYPE=Release -DOPENLOCO_BUILD_TESTS=NO
+cmake --build build -j$(nproc)
+mv -v build/data build/OpenLoco ./AppDir/bin
