@@ -7,11 +7,11 @@ ARCH=$(uname -m)
 echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm \
-	cmake 	 \
-	fmt		 \
-	libdecor \
-	openal 	 \
-	sdl2 	 \
+	cmake 	    \
+	fmt		    \
+	libdecor    \
+	openal 	    \
+	sdl2-compat \
 	yaml-cpp
 
 echo "Installing debloated packages..."
