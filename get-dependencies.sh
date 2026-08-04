@@ -25,4 +25,6 @@ make-aur-package "$package"
 pacman -Q "$package" | awk '{print $2; exit}' > ~/version
 
 mkdir -p ./AppDir/bin
+ls /usr/bin/data
+ls /usr/share/OpenLoco
 mv -v /usr/share/OpenLoco/data ./AppDir/bin
