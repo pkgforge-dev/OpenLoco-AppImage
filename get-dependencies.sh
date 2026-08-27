@@ -9,6 +9,7 @@ echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm \
     cmake    \
     fmt      \
+    gtest \
     onetbb \
     openal   \
     sdl3     \
