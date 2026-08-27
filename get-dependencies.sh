@@ -51,6 +51,6 @@ echo "$VERSION" > ~/version
 
 mkdir -p ./AppDir/bin
 cd ./OpeLoco
-cmake -G "Unix Makefiles" -B build -S ./ -Wno-author \
-    -DCMAKE_BUILD_TYPE=Release
+cmake -G "Unix Makefiles" -B build -S ./ -DCMAKE_BUILD_TYPE=Release -DOPENLOCO_BUILD_TESTS=NO
 cmake --build build -j$(nproc)
+mv -v build/data build/ .../AppDir/bin
