@@ -16,13 +16,29 @@ get-debloated-pkgs --add-common --prefer-nano libdecor-mini
 #make-aur-package PACKAGENAME
 
 # If the application needs to be manually built that has to be done down here
-if [ "${DEVEL_RELEASE-}" = 1 ]; then
-	package=openloco-git
-else
-	package=openloco
-fi
-make-aur-package "$package"
-pacman -Q "$package" | awk '{print $2; exit}' > ~/version
+#if [ "${DEVEL_RELEASE-}" = 1 ]; then
+#	package=openloco-git
+#else
+#	package=openloco
+#fi
+#make-aur-package "$package"
+#pacman -Q "$package" | awk '{print $2; exit}' > ~/version
 
-mkdir -p ./AppDir/bin
-mv -v /usr/share/openloco/data ./AppDir/bin
+#mkdir -p ./AppDir/bin
+#mv -v /usr/share/openloco/data ./AppDir/bin
+
+echo "Building OpenLoco..."
+echo "---------------------------------------------------------------"
+REPO="https://github.com/dalerank/Akhenaten"
+if [ "${DEVEL_RELEASE-}" = 1 ]; then
+    echo "Making nightly build of OpenLoco..."
+    echo "---------------------------------------------------------------"
+    VERSION="$(git ls-remote "$REPO" HEAD | cut -c 1-9 | head -1)"
+    git clone "$REPO" ./Akhenaten
+else
+    echo "Making stable build of OpenLoco..."
+    echo "---------------------------------------------------------------"
+    VERSION=$(git ls-remote --tags --refs --sort='v:refname' "$REPO" "refs/tags/ra*" | tail -n1 | cut -d/ -f3)
+    git clone --branch "$VERSION" --single-branch "$REPO" ./Akhenaten
+fi
+echo "$VERSION" > ~/version
