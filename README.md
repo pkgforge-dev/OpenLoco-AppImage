@@ -17,7 +17,7 @@
 
 </div>
 
-## ⚠️ Game assets within `~.steam/steam/steamapps/common/Locomotion` ⚠️
+## ⚠️ Game assets within `~/.steam/steam/steamapps/common/Locomotion` ⚠️
 
 ---
 
