@@ -9,7 +9,6 @@ echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm \
     cmake    \
     fmt      \
-    gtest \
     onetbb \
     openal   \
     sdl3     \
@@ -51,3 +50,7 @@ fi
 echo "$VERSION" > ~/version
 
 mkdir -p ./AppDir/bin
+cd ./OpeLoco
+cmake -G "Unix Makefiles" -B build -S ./ -Wno-author \
+    -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j$(nproc)
