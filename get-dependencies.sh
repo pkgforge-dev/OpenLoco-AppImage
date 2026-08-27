@@ -56,4 +56,4 @@ mkdir -p ./AppDir/bin
 cd ./OpenLoco
 cmake -G "Unix Makefiles" -B build -S ./ -DCMAKE_BUILD_TYPE=Release -DOPENLOCO_BUILD_TESTS=NO
 cmake --build build -j$(nproc)
-mv -v build/data build/OpenLoco .../AppDir/bin
+mv -v build/data build/OpenLoco ../AppDir/bin
