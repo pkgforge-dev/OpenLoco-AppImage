@@ -44,8 +44,11 @@ if [ "${DEVEL_RELEASE-}" = 1 ]; then
 else
     echo "Making stable build of OpenLoco..."
     echo "---------------------------------------------------------------"
-    VERSION=$(git ls-remote --tags --refs --sort='v:refname' "$REPO" "refs/tags/ra*" | tail -n1 | cut -d/ -f3)
-    git clone --branch "$VERSION" --single-branch "$REPO" ./OpenLoco
+    #VERSION=$(git ls-remote --tags --refs --sort='v:refname' "$REPO" "refs/tags/ra*" | tail -n1 | cut -d/ -f3)
+    #git clone --branch "$VERSION" --single-branch "$REPO" ./OpenLoco
+    TAG=$(git ls-remote --tags --refs --sort='v:refname' "$REPO" "refs/tags/v*" | tail -n1 | cut -d/ -f3)
+    VERSION="${TAG#v}"
+    git clone --branch "$TAG" --single-branch "$REPO" ./OpenLoco
 fi
 echo "$VERSION" > ~/version
 
