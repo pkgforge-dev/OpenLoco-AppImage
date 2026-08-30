@@ -9,7 +9,7 @@ echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm \
     cmake    \
     fmt      \
-    onetbb \
+    onetbb   \
     openal   \
     sdl3     \
     yaml-cpp
