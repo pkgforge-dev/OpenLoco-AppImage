@@ -12,7 +12,7 @@ export DESKTOP=https://raw.githubusercontent.com/OpenLoco/OpenLoco/refs/heads/ma
 export DEPLOY_OPENGL=1
 
 # Deploy dependencies
-quick-sharun ./AppDir/bin/OpenLoco
+quick-sharun ./AppDir/bin/OpenLoco /usr/lib/libopenal.so*
 
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
